@@ -13,8 +13,27 @@ Zombie::Zombie(string nameIn, uint32_t distanceIn, uint32_t speedIn, uint32_t he
     alive = true;
 }
 
-void Zombie::move() {
+Zombie::Zombie(bool named) {
+    string junk;
+    if (named) {
+        cin >> name >> junk >> distance >> junk >> speed >> junk >> health;
+    } else {
+        string       nameIn = P2random::getNextZombieName()     ;
+        uint32_t distanceIn = P2random::getNextZombieDistance() ;
+        uint32_t    speedIn = P2random::getNextZombieSpeed()    ;
+        uint32_t   healthIn = P2random::getNextZombieHealth()   ;
+        name                = nameIn;
+        distance            = distanceIn;
+        speed               = speedIn;
+        health              = healthIn;
+    }
+    age   = 0;
+    alive = true;
+}
+
+bool Zombie::move() {
     distance -= min(distance, speed);
+    return distance == 0;
 }
 
 void Zombie::damage() {
@@ -28,7 +47,7 @@ uint32_t Zombie::eta() {
 bool Zombie::die() {
     if (health == 0) {
         alive = false;
-    } return alive;
+    } return !alive;
 }
 
 Zombie Zombie::operator<(Zombie &right) {
@@ -37,6 +56,15 @@ Zombie Zombie::operator<(Zombie &right) {
     } else if (this->eta() == right.eta()) {
         if (this->health < right.health) {
             return *this;
-        } else if ()
-    }
+        } else if (this->health == right.health) {
+            if (this->name < right.name) {
+                return *this;
+            } else return right;
+        } else return right;
+    } else return right;
+}
+
+ostream & operator << (ostream &out, const Zombie &z) {
+    out << z.name << " (distance: " << z.distance << ", speed: " << z.speed
+        << ", health: " << z.health << ")";
 }

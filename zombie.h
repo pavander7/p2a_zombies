@@ -1,24 +1,29 @@
 //9504853406CBAC39EE89AA3AD238AA12CA198043
 
 #include <string>
+#include <iostream>
+#include "P2random.h"
 
 using namespace std;
 
 class Zombie {
 public:
     Zombie(string nameIn, uint32_t distanceIn, uint32_t speedIn, uint32_t healthIn);
+    Zombie(bool named);
     
     void damage();
-    void move();
+    bool move();
 
     uint32_t eta();
 
     bool die();
 
     Zombie operator<(Zombie &right);
+    friend ostream & operator << (ostream &out, const Zombie &z);
+
+    string name;
 
 private:
-    string name;
     uint32_t distance;
     uint32_t speed;
     uint32_t health;

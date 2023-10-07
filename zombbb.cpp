@@ -60,28 +60,95 @@ int main (int argc, char* argv[]) {
     cin >> line >> maxSpeed; // max rand speed
     cin >> line >> maxHealth; // max rand health
 
+    // init rand
+    P2random::initialize(seed, maxDist, maxSpeed, maxHealth);
+
     //make player
     uint32_t quiver = 0;
-    uint32_t round = 0;
+    uint32_t round = 1;
     uint32_t numRandos = 0;
     uint32_t numOCs = 0;
+
+    //for death tracking
+    string killer; 
+    string lastKill;
+    bool dead = false;
+    bool more = true;
 
     //make zombie queues
     priority_queue<Zombie> field;
 
     //begin rounds
     getline(cin, line); //discard delimiter
-    while (true) {
-        refill(QC);
-        cin >> line >> round; // round number
-        cin >> line >> numRandos; // random zombie pop
-        cin >> line >> numOCs; // named zombie pop
-        for (uint32_t q = 0; q < numOCs; q++) {
-            
+    uint32_t nextRound = 0;
+    cin >> line >> nextRound; // round number
+    while (!field.empty() || more) { 
+        // step 1: start round
+        if (verbose) cout << "Round: " << round << endl;
+        
+        // step 2: refill quiver
+        quiver = QC;
+
+        // step 3: existing zombies move & attack
+        priority_queue<Zombie> old_field;
+        for (uint32_t w = 0; w < field.size(); w++) {
+            Zombie temp = field.top();
+            field.pop();
+            bool reach = temp.move();
+            if (verbose) {
+                cout << "Moved: " << temp << "\n";
+            }
+            if (reach && !dead) {
+                killer = temp.name;
+                dead = true;
+            }
+            old_field.push(temp);
         }
+        field = old_field;
+
+        // step 4: check death
+        if (dead) {
+            cout << "DEFEAT IN ROUND " << round << "! " << killer << " ate your brains!\n";
+            return 0;
+        }
+
+        // step 5: new zombies appear
+        if (round = nextRound) {
+            cin >> line >> numRandos; // random zombie pop
+            cin >> line >> numOCs; // named zombie pop
+            for (uint32_t q = 0; q < numRandos; q++) {
+                Zombie temp = Zombie(false);
+                field.push(temp);
+                if (verbose) cout << "Created: " << temp << "\n";
+            } for (uint32_t s = 0; s < numOCs; s++) {
+                Zombie temp = Zombie(true);
+                field.push(temp);
+                if (verbose) cout << "Created: " << temp << "\n";
+            }
+            getline(cin, line); //discard delimiter
+            if (!(cin >> line >> nextRound)) { // round number
+                more = false;
+            }
+        }
+
+        // step 6: player shoots zombies
+        while (quiver != 0) {
+            Zombie temp = field.top();
+            field.pop();
+            temp.damage();
+            if (temp.die()) {
+                if (verbose) {
+                    cout << "Destroyed: " << temp << endl;
+                }
+                lastKill = temp.name;
+            } else {
+                field.push(temp);
+            }
+        }
+
+        // step 7: median
+
+        // step 8: check win (while loop condition)
     }
-}
-
-void refill(uint32_t QC) {
-
+    cout << "VICTORY IN ROUND " << round << "! " << lastKill << " was the last zombie.\n";
 }
