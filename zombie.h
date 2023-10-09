@@ -14,11 +14,11 @@ public:
     void damage();
     bool move();
 
-    uint32_t eta();
+    uint32_t eta() const;
 
     bool die();
 
-    Zombie operator<(Zombie &right);
+    friend class ZombieCompare;
     friend ostream & operator << (ostream &out, const Zombie &z);
 
     string name;
@@ -29,4 +29,9 @@ private:
     uint32_t speed;
     uint32_t health;
     bool alive;
+};
+
+class ZombieCompare {
+public:
+    bool operator() (const Zombie &a, const Zombie &b) const;
 };

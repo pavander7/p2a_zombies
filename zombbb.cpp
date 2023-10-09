@@ -41,7 +41,7 @@ int main (int argc, char* argv[]) {
                 break;
             case 's' :
                 statistics = true;
-                N = uint32_t(optarg);
+                N = uint32_t(stoi(optarg));
                 break;
         }
     }
@@ -85,8 +85,8 @@ int main (int argc, char* argv[]) {
     vector<string> weakGuys;
     priority_queue<uint32_t> ages;
 
-    //make zombie queues
-    priority_queue<Zombie> field;
+    //make zombie queue
+    priority_queue<Zombie, vector<Zombie>, ZombieCompare> field;
 
     //begin rounds
     getline(cin, line); //discard delimiter
@@ -100,7 +100,7 @@ int main (int argc, char* argv[]) {
         quiver = QC;
 
         // step 3: existing zombies move & attack
-        priority_queue<Zombie> old_field;
+        priority_queue<Zombie, vector<Zombie>, ZombieCompare> old_field;
         for (uint32_t w = 0; w < field.size(); w++) {
             Zombie temp = field.top();
             field.pop();
@@ -123,16 +123,18 @@ int main (int argc, char* argv[]) {
         }
 
         // step 5: new zombies appear
-        if (round = nextRound) {
+        if (round == nextRound) {
             cin >> line >> numRandos; // random zombie pop
             cin >> line >> numOCs; // named zombie pop
             for (uint32_t q = 0; q < numRandos; q++) {
                 Zombie temp = Zombie(false);
                 field.push(temp);
+                NUM_ZOMBIES++;
                 if (verbose) cout << "Created: " << temp << "\n";
             } for (uint32_t s = 0; s < numOCs; s++) {
                 Zombie temp = Zombie(true);
                 field.push(temp);
+                NUM_ZOMBIES++;
                 if (verbose) cout << "Created: " << temp << "\n";
             }
             getline(cin, line); //discard delimiter
@@ -178,19 +180,19 @@ int main (int argc, char* argv[]) {
 
         // step 7: median
         if (median) {
-            uint32_t iMedian = 0;
+            size_t iMedian = 0;
             uint32_t medVal = 0;
             priority_queue<uint32_t> bufferAges = ages;
             if (ages.size()%2 == 1) {
-                iMedian = ages.size()/2 - 1;
-                for (uint32_t w = 0; w < iMedian-1; w++) {
+                iMedian = ages.size()/size_t(2) - size_t(1);
+                for (size_t w = 0; w < iMedian-1; w++) {
                     ages.pop();
                 } uint32_t temp = ages.top();
                 ages.pop();
-                medVal = (ages.top() + temp)/2;
+                medVal = (ages.top() + temp)/uint32_t(2);
             } else {
-                iMedian = (ages.size() - 1)/2;
-                for (uint32_t w = 0; w < iMedian-1; w++) {
+                iMedian = (ages.size() - size_t(1))/size_t(2);
+                for (size_t w = 0; w < iMedian-1; w++) {
                     ages.pop();
                 } medVal = ages.top();
             }

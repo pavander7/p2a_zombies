@@ -40,7 +40,7 @@ void Zombie::damage() {
     health--;
 }
 
-uint32_t Zombie::eta() {
+uint32_t Zombie::eta() const {
     return distance/speed;
 }
 
@@ -50,21 +50,20 @@ bool Zombie::die() {
     } return !alive;
 }
 
-Zombie Zombie::operator<(Zombie &right) {
-    if (this->eta() < right.eta()) {
-        return *this;
-    } else if (this->eta() == right.eta()) {
-        if (this->health < right.health) {
-            return *this;
-        } else if (this->health == right.health) {
-            if (this->name < right.name) {
-                return *this;
-            } else return right;
-        } else return right;
-    } else return right;
+bool ZombieCompare::operator() (const Zombie &a, const Zombie &b) const {
+    if (a.eta() < b.eta()) {
+        return true;
+    } else if (a.eta() == b.eta()) {
+        if (a.health < b.health) {
+            return true;
+        } else if (a.health == b.health) {
+            return (a.name < b.name);
+        } else return false;
+    } else return false;
 }
 
 ostream & operator << (ostream &out, const Zombie &z) {
     out << z.name << " (distance: " << z.distance << ", speed: " << z.speed
         << ", health: " << z.health << ")";
+    return out;
 }
