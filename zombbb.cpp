@@ -23,7 +23,8 @@ int main (int argc, char* argv[]) {
     //placeholder variables for input processing
     bool verbose = false;
     bool median = false;
-    uint32_t statistics = 0;
+    bool statistics = false;
+    uint32_t N = 0;
 
     int c = getopt_long(argc, argv, "hvms:", long_options, &option_index);
     while (c != -1) {
@@ -39,7 +40,8 @@ int main (int argc, char* argv[]) {
                 median = true;
                 break;
             case 's' :
-                statistics = uint32_t(optarg);
+                statistics = true;
+                N = uint32_t(optarg);
                 break;
         }
     }
@@ -74,6 +76,14 @@ int main (int argc, char* argv[]) {
     string lastKill;
     bool dead = false;
     bool more = true;
+    uint32_t NUM_ZOMBIES = 0;
+    vector<string> graveyard;
+    uint32_t maxAge = 0;
+    vector<string> tuffGuys;
+    bool firstkill = true;
+    uint32_t minAge = 0;
+    vector<string> weakGuys;
+    priority_queue<uint32_t> ages;
 
     //make zombie queues
     priority_queue<Zombie> field;
@@ -141,12 +151,53 @@ int main (int argc, char* argv[]) {
                     cout << "Destroyed: " << temp << endl;
                 }
                 lastKill = temp.name;
+                if (graveyard.size() < N) {
+                    graveyard.push_back(temp.name);
+                }
+                if (statistics) {
+                    if (firstkill) {
+                        maxAge = minAge = temp.age;
+                        tuffGuys = weakGuys = {temp.name};
+                        firstkill = false;
+                    } else if (temp.age > maxAge) {
+                        maxAge = temp.age;
+                        tuffGuys = {temp.name};
+                    } else if (temp.age == maxAge && tuffGuys.size() < N) {
+                        tuffGuys.push_back(temp.name);
+                    } else if (temp.age < minAge) {
+                        minAge = temp.age;
+                    } else if (temp.age == minAge && weakGuys.size() < N) {
+                        weakGuys.push_back(temp.name);
+                    }
+                    
+                } if (median) ages.push(temp.age);
             } else {
                 field.push(temp);
             }
         }
 
         // step 7: median
+        if (median) {
+            uint32_t iMedian = 0;
+            uint32_t medVal = 0;
+            priority_queue<uint32_t> bufferAges = ages;
+            if (ages.size()%2 == 1) {
+                iMedian = ages.size()/2 - 1;
+                for (uint32_t w = 0; w < iMedian-1; w++) {
+                    ages.pop();
+                } uint32_t temp = ages.top();
+                ages.pop();
+                medVal = (ages.top() + temp)/2;
+            } else {
+                iMedian = (ages.size() - 1)/2;
+                for (uint32_t w = 0; w < iMedian-1; w++) {
+                    ages.pop();
+                } medVal = ages.top();
+            }
+            ages = bufferAges;
+            cout << "At the end of round " << round << ", the median zombie lifetime is " << medVal << endl;
+        }
+        
 
         // step 8: check win (while loop condition)
     }

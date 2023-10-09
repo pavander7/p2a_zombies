@@ -22,11 +22,11 @@ public:
     friend ostream & operator << (ostream &out, const Zombie &z);
 
     string name;
+    uint32_t age;
 
 private:
     uint32_t distance;
     uint32_t speed;
     uint32_t health;
-    uint32_t age;
     bool alive;
 };
