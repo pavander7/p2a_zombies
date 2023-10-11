@@ -3,6 +3,7 @@
 #include <iostream>
 #include <getopt.h>
 #include <queue>
+#include <deque>
 #include "zombie.h"
 
 using namespace std;
@@ -88,12 +89,13 @@ int main (int argc, char* argv[]) {
     bool dead = false;
     bool more = true;
     uint32_t NUM_ZOMBIES = 0;
-    vector<string> graveyard;
+    deque<string> graveyardF;
+    deque<string> graveyardL;
     uint32_t maxAge = 0;
-    vector<string> tuffGuys;
+    deque<string> tuffGuys;
     bool firstkill = true;
     uint32_t minAge = 0;
-    vector<string> weakGuys;
+    deque<string> wimpyGuys;
     priority_queue<uint32_t> ages;
 
     //make zombie queue
@@ -171,13 +173,17 @@ int main (int argc, char* argv[]) {
                     cout << "Destroyed: " << temp << endl;
                 }
                 lastKill = temp.name;
-                if (graveyard.size() < N) {
-                    graveyard.push_back(temp.name);
+                if (graveyardF.size() < N) {
+                    graveyardF.push_back(temp.name);
+                    graveyardL.push_front(temp.name);
+                } else if (graveyardL.size() == N) {
+                    graveyardL.pop_back();
+                    graveyardL.push_front(temp.name);
                 }
                 if (statistics) {
                     if (firstkill) {
                         maxAge = minAge = temp.age;
-                        tuffGuys = weakGuys = {temp.name};
+                        tuffGuys = wimpyGuys = {temp.name};
                         firstkill = false;
                     } else if (temp.age > maxAge) {
                         maxAge = temp.age;
@@ -186,8 +192,9 @@ int main (int argc, char* argv[]) {
                         tuffGuys.push_back(temp.name);
                     } else if (temp.age < minAge) {
                         minAge = temp.age;
-                    } else if (temp.age == minAge && weakGuys.size() < N) {
-                        weakGuys.push_back(temp.name);
+                        wimpyGuys = {temp.name};
+                    } else if (temp.age == minAge && wimpyGuys.size() < N) {
+                        wimpyGuys.push_back(temp.name);
                     }
                     
                 } if (median) ages.push(temp.age);
@@ -224,4 +231,27 @@ int main (int argc, char* argv[]) {
         // step 8: check win (while loop condition)
     }
     cout << "VICTORY IN ROUND " << round << "! " << lastKill << " was the last zombie.\n";
+    // stats output
+    if (statistics) {
+        cout << "First zombies killed:\n";
+        for (uint32_t kvnt = 1; kvnt <= N; kvnt++) {
+            cout << graveyardF.front() << " " << kvnt << endl;
+            graveyardF.pop_front();
+        } 
+        cout << "Last zombies killed:\n";
+        for (uint32_t pvssie = 1; pvssie <= N; pvssie++) {
+            cout << graveyardL.front() << " " << pvssie << endl;
+            graveyardL.pop_front();
+        } 
+        cout << "Most active zombies:\n";
+        for (uint32_t kawk = 1; kawk <= N; kawk++) {
+            cout << tuffGuys.front() << " " << maxAge << endl;
+            tuffGuys.pop_back();
+        }
+        cout << "Least active zombies:\n";
+        for (uint32_t bawls = 1; bawls <= N; bawls++) {
+            cout << wimpyGuys.front() << " " << minAge << endl;
+            wimpyGuys.pop_back();
+        }
+    }
 }
