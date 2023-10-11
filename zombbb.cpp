@@ -11,6 +11,8 @@ int main (int argc, char* argv[]) {
     //getoptlong time
     ios_base::sync_with_stdio(false);
 
+    cout << "good morning \n";
+
     static struct option long_options[] = {
     {"help",        no_argument,        NULL,  'h'},
     {"verbose",     no_argument,        NULL,  'v'},
@@ -46,6 +48,7 @@ int main (int argc, char* argv[]) {
         }
     }
 
+    cout << "options parsed \n";
     //init simulation params
     uint32_t QC = 0;
     uint32_t seed = 0;
@@ -67,7 +70,7 @@ int main (int argc, char* argv[]) {
 
     //make player
     uint32_t quiver = 0;
-    uint32_t round = 1;
+    uint32_t round = 0;
     uint32_t numRandos = 0;
     uint32_t numOCs = 0;
 
@@ -94,6 +97,7 @@ int main (int argc, char* argv[]) {
     cin >> line >> nextRound; // round number
     while (!field.empty() || more) { 
         // step 1: start round
+        round++;
         if (verbose) cout << "Round: " << round << endl;
         
         // step 2: refill quiver
@@ -200,7 +204,6 @@ int main (int argc, char* argv[]) {
             cout << "At the end of round " << round << ", the median zombie lifetime is " << medVal << endl;
         }
         
-
         // step 8: check win (while loop condition)
     }
     cout << "VICTORY IN ROUND " << round << "! " << lastKill << " was the last zombie.\n";
