@@ -11,7 +11,7 @@ int main (int argc, char* argv[]) {
     //getoptlong time
     ios_base::sync_with_stdio(false);
 
-    cout << "good morning \n";
+    //cout << "good morning \n";
 
     static struct option long_options[] = {
     {"help",        no_argument,        NULL,  'h'},
@@ -44,26 +44,34 @@ int main (int argc, char* argv[]) {
             case 's' :
                 statistics = true;
                 N = uint32_t(stoi(optarg));
+                cout << "stats selected, N: " << N << endl;
                 break;
         }
+        c = getopt_long(argc, argv, "hvms:", long_options, &option_index);
     }
 
-    cout << "options parsed \n";
+    //cout << "options parsed \n";
     //init simulation params
     uint32_t QC = 0;
     uint32_t seed = 0;
     uint32_t maxDist = 0;
     uint32_t maxSpeed = 0;
     uint32_t maxHealth = 0;
-
+    
     //cin sim params
     string line;
     getline(cin, line); //discard comment
-    cin >> line >> QC; // quiver capacity
-    cin >> line >> seed; // seed
-    cin >> line >> maxDist; // max rand distance
-    cin >> line >> maxSpeed; // max rand speed
-    cin >> line >> maxHealth; // max rand health
+    cin >> line;
+    cin >> QC; // quiver capacity
+    cin >> line;
+    cin >> seed; // seed
+    cin >> line;
+    cin >> maxDist; // max rand distance
+    cin >> line;
+    cin >> maxSpeed; // max rand speed
+    cin >> line;
+    cin >> maxHealth; // max rand health
+    //cout << "sim params set \n";
 
     // init rand
     P2random::initialize(seed, maxDist, maxSpeed, maxHealth);
@@ -92,18 +100,19 @@ int main (int argc, char* argv[]) {
     priority_queue<Zombie, vector<Zombie>, ZombieCompare> field;
 
     //begin rounds
+    getline(cin, line); // discard endl
     getline(cin, line); //discard delimiter
     uint32_t nextRound = 0;
     cin >> line >> nextRound; // round number
     while (!field.empty() || more) { 
-        // step 1: start round
+        //cout << "step 1: start round \n";
         round++;
         if (verbose) cout << "Round: " << round << endl;
         
-        // step 2: refill quiver
+        //cout << "step 2: refill quiver \n";
         quiver = QC;
 
-        // step 3: existing zombies move & attack
+        //cout << "step 3: existing zombies move & attack \n";
         priority_queue<Zombie, vector<Zombie>, ZombieCompare> old_field;
         for (uint32_t w = 0; w < field.size(); w++) {
             Zombie temp = field.top();
@@ -120,14 +129,16 @@ int main (int argc, char* argv[]) {
         }
         field = old_field;
 
-        // step 4: check death
+        //cout << "step 4: check death \n";
         if (dead) {
             cout << "DEFEAT IN ROUND " << round << "! " << killer << " ate your brains!\n";
             return 0;
         }
 
-        // step 5: new zombies appear
+        //cout << "step 5: new zombies appear\n";
+        //cout << nextRound << " is the next wave\n";
         if (round == nextRound) {
+            //cout << "hello\n";
             cin >> line >> numRandos; // random zombie pop
             cin >> line >> numOCs; // named zombie pop
             for (uint32_t q = 0; q < numRandos; q++) {
@@ -144,14 +155,17 @@ int main (int argc, char* argv[]) {
             getline(cin, line); //discard delimiter
             if (!(cin >> line >> nextRound)) { // round number
                 more = false;
+                //cout << "no more waves \n";
             }
         }
 
-        // step 6: player shoots zombies
+        //cout << "step 6: player shoots zombies\n";
         while (quiver != 0) {
             Zombie temp = field.top();
             field.pop();
             temp.damage();
+            quiver--;
+            //cout << "shooting: " << temp << endl;
             if (temp.die()) {
                 if (verbose) {
                     cout << "Destroyed: " << temp << endl;
@@ -179,10 +193,13 @@ int main (int argc, char* argv[]) {
                 } if (median) ages.push(temp.age);
             } else {
                 field.push(temp);
-            }
+                //cout << temp << " survived \n";
+            } //cout << field.size() << " zombies remaining \n";
         }
 
-        // step 7: median
+        //cout << "sim exited\n";
+
+        //cout << "step 7: median\n";
         if (median) {
             size_t iMedian = 0;
             uint32_t medVal = 0;
