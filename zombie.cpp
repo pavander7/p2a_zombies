@@ -4,16 +4,7 @@
 
 using namespace std;
 
-Zombie::Zombie(string nameIn, uint32_t distanceIn, uint32_t speedIn, uint32_t healthIn) {
-    name = nameIn;
-    distance = distanceIn;
-    speed = speedIn;
-    health = healthIn;
-    age = 0;
-    alive = true;
-}
-
-Zombie::Zombie(bool named) {
+Zombie::Zombie(bool named, uint32_t indexIn) {
     string junk;
     if (named) {
         cin >> name >> junk >> distance >> junk >> speed >> junk >> health;
@@ -27,12 +18,14 @@ Zombie::Zombie(bool named) {
         speed               = speedIn;
         health              = healthIn;
     }
-    age   = 0;
+    age   = 1;
     alive = true;
+    index = indexIn;
 }
 
 bool Zombie::move() {
     distance -= min(distance, speed);
+    age++;
     return distance == 0;
 }
 
@@ -52,14 +45,14 @@ bool Zombie::die() {
 
 bool ZombieCompare::operator() (const Zombie &a, const Zombie &b) const {
     if (a.eta() < b.eta()) {
-        return true;
+        return false;
     } else if (a.eta() == b.eta()) {
         if (a.health < b.health) {
-            return true;
+            return false;
         } else if (a.health == b.health) {
-            return (a.name < b.name);
-        } else return false;
-    } else return false;
+            return (a.name > b.name);
+        } else return true;
+    } else return true;
 }
 
 ostream & operator << (ostream &out, const Zombie &z) {

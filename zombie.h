@@ -8,8 +8,7 @@ using namespace std;
 
 class Zombie {
 public:
-    Zombie(string nameIn, uint32_t distanceIn, uint32_t speedIn, uint32_t healthIn);
-    Zombie(bool named);
+    Zombie(bool named, uint32_t indexIn);
     
     void damage();
     bool move();
@@ -23,12 +22,13 @@ public:
 
     string name;
     uint32_t age;
+    uint32_t index;
+    bool alive;
 
 private:
     uint32_t distance;
     uint32_t speed;
     uint32_t health;
-    bool alive;
 };
 
 class ZombieCompare {

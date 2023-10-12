@@ -45,7 +45,7 @@ int main (int argc, char* argv[]) {
             case 's' :
                 statistics = true;
                 N = uint32_t(stoi(optarg));
-                cout << "stats selected, N: " << N << endl;
+                //cout << "stats selected, N: " << N << endl;
                 break;
         }
         c = getopt_long(argc, argv, "hvms:", long_options, &option_index);
@@ -58,6 +58,8 @@ int main (int argc, char* argv[]) {
     uint32_t maxDist = 0;
     uint32_t maxSpeed = 0;
     uint32_t maxHealth = 0;
+
+    uint32_t nextIndex = 0;
     
     //cin sim params
     string line;
@@ -91,15 +93,16 @@ int main (int argc, char* argv[]) {
     uint32_t NUM_ZOMBIES = 0;
     deque<string> graveyardF;
     deque<string> graveyardL;
-    uint32_t maxAge = 0;
+    uint32_t maxAge = 1;
     deque<string> tuffGuys;
     bool firstkill = true;
-    uint32_t minAge = 0;
+    uint32_t minAge = 1;
     deque<string> wimpyGuys;
     priority_queue<uint32_t> ages;
 
     //make zombie queue
-    priority_queue<Zombie, vector<Zombie>, ZombieCompare> field;
+    vector<Zombie> field;
+    //priority_queue<Zombie, vector<Zombie>, ZombieCompare> field;
 
     //begin rounds
     getline(cin, line); // discard endl
@@ -115,45 +118,73 @@ int main (int argc, char* argv[]) {
         quiver = QC;
 
         //cout << "step 3: existing zombies move & attack \n";
-        priority_queue<Zombie, vector<Zombie>, ZombieCompare> old_field;
-        for (uint32_t w = 0; w < field.size(); w++) {
-            Zombie temp = field.top();
-            field.pop();
-            bool reach = temp.move();
-            if (verbose) {
-                cout << "Moved: " << temp << "\n";
+        for (uint32_t urethra = 0; urethra < field.size(); urethra++) {
+            if (field[urethra].alive) {
+                bool reach = field[urethra].move();
+                if (verbose) {
+                    cout << "Moved: " << field[urethra] << "\n";
+                }
+                if (reach && !dead) {
+                    killer = field[urethra].name;
+                    dead = true;
+                }
             }
-            if (reach && !dead) {
-                killer = temp.name;
-                dead = true;
-            }
-            old_field.push(temp);
         }
-        field = old_field;
 
         //cout << "step 4: check death \n";
         if (dead) {
             cout << "DEFEAT IN ROUND " << round << "! " << killer << " ate your brains!\n";
             if (statistics) {
                 cout << "First zombies killed:\n";
-                for (uint32_t kvnt = 1; kvnt <= min(size_t(N),graveyardF.size()); kvnt++) {
+                uint32_t sizer = uint32_t(graveyardF.size());
+                for (uint32_t kvnt = 1; kvnt <= min(N,sizer); kvnt++) {
                     cout << graveyardF.front() << " " << kvnt << endl;
                     graveyardF.pop_front();
                 } 
                 cout << "Last zombies killed:\n";
-                for (uint32_t pvssie = 1; pvssie <= min(size_t(N),graveyardL.size()); pvssie++) {
-                    cout << graveyardL.front() << " " << pvssie << endl;
+                for (uint32_t pvssie = 0; pvssie < min(N,sizer); pvssie++) {
+                    cout << graveyardL.front() << " " << min(N,sizer) - pvssie << endl;
                     graveyardL.pop_front();
                 } 
+                for (uint32_t uvula = 0; uvula < field.size(); uvula++) {
+                    Zombie temp = field[uvula];
+                    if (temp.alive) {
+                        if (firstkill) {
+                            //cout << "FATALITY\n";
+                            maxAge = minAge = temp.age;
+                            tuffGuys.push_back(temp.name);
+                            wimpyGuys.push_back(temp.name);
+                            firstkill = false;
+                        } else {
+                            if (temp.age > maxAge) {
+                                maxAge = temp.age;
+                                tuffGuys.clear();
+                                tuffGuys.push_back(temp.name);
+                            } else if (temp.age == maxAge) {
+                                tuffGuys.push_back(temp.name);
+                            } if (temp.age < minAge) {
+                                minAge = temp.age;
+                                wimpyGuys.clear();
+                                wimpyGuys.push_back(temp.name);
+                            } else if (temp.age == minAge) {
+                                wimpyGuys.push_back(temp.name);
+                            }
+                        }
+                    }
+                }
+                sort(tuffGuys.begin(), tuffGuys.end());
+                sort(wimpyGuys.begin(),wimpyGuys.end());
                 cout << "Most active zombies:\n";
-                for (uint32_t kawk = 1; kawk <= min(size_t(N),tuffGuys.size()); kawk++) {
+                sizer = uint32_t(tuffGuys.size());
+                for (uint32_t kawk = 1; kawk <= min(N,sizer); kawk++) {
                     cout << tuffGuys.front() << " " << maxAge << endl;
-                    tuffGuys.pop_back();
+                    tuffGuys.pop_front();
                 }
                 cout << "Least active zombies:\n";
-                for (uint32_t bawls = 1; bawls <= min(size_t(N),wimpyGuys.size()); bawls++) {
+                sizer = uint32_t(wimpyGuys.size());
+                for (uint32_t bawls = 1; bawls <= min(N,sizer); bawls++) {
                     cout << wimpyGuys.front() << " " << minAge << endl;
-                    wimpyGuys.pop_back();
+                    wimpyGuys.pop_front();
                 }
             }
             return 0;
@@ -166,15 +197,21 @@ int main (int argc, char* argv[]) {
             cin >> line >> numRandos; // random zombie pop
             cin >> line >> numOCs; // named zombie pop
             for (uint32_t q = 0; q < numRandos; q++) {
-                Zombie temp = Zombie(false);
-                field.push(temp);
+                Zombie temp = Zombie(false, nextIndex);
+                nextIndex++;
+                field.push_back(temp);
                 NUM_ZOMBIES++;
-                if (verbose) cout << "Created: " << temp << "\n";
+                if (verbose) cout << "Created: " << temp << 
+                //" eta: " << temp.eta() <<
+                "\n";
             } for (uint32_t s = 0; s < numOCs; s++) {
-                Zombie temp = Zombie(true);
-                field.push(temp);
+                Zombie temp = Zombie(true, nextIndex);
+                nextIndex++;
+                field.push_back(temp);
                 NUM_ZOMBIES++;
-                if (verbose) cout << "Created: " << temp << "\n";
+                if (verbose) cout << "Created: " << temp <<
+                //" eta: " << temp.eta() <<
+                "\n";
             }
             getline(cin, line); //discard delimiter
             if (!(cin >> line >> nextRound)) { // round number
@@ -184,9 +221,13 @@ int main (int argc, char* argv[]) {
         }
 
         //cout << "step 6: player shoots zombies\n";
+        priority_queue<Zombie, vector<Zombie>, ZombieCompare> shooting_range;
+        for (uint32_t kvm = 0; kvm < field.size(); kvm++) {
+            if (field[kvm].alive) shooting_range.push(field[kvm]);
+        }
         while (quiver != 0) {
-            Zombie temp = field.top();
-            field.pop();
+            Zombie temp = shooting_range.top();
+            shooting_range.pop();
             temp.damage();
             quiver--;
             //cout << "shooting: " << temp << endl;
@@ -199,31 +240,38 @@ int main (int argc, char* argv[]) {
                     graveyardF.push_back(temp.name);
                     graveyardL.push_front(temp.name);
                 } else if (graveyardL.size() == N) {
+                    //cout << "graveyard full\n";
                     graveyardL.pop_back();
                     graveyardL.push_front(temp.name);
                 }
                 if (statistics) {
                     if (firstkill) {
+                        //cout << "FATALITY\n";
                         maxAge = minAge = temp.age;
-                        tuffGuys = wimpyGuys = {temp.name};
-                        firstkill = false;
-                    } else if (temp.age > maxAge) {
-                        maxAge = temp.age;
-                        tuffGuys = {temp.name};
-                    } else if (temp.age == maxAge && tuffGuys.size() < N) {
                         tuffGuys.push_back(temp.name);
-                    } else if (temp.age < minAge) {
-                        minAge = temp.age;
-                        wimpyGuys = {temp.name};
-                    } else if (temp.age == minAge && wimpyGuys.size() < N) {
                         wimpyGuys.push_back(temp.name);
+                        firstkill = false;
+                    } else {
+                        if (temp.age > maxAge) {
+                            maxAge = temp.age;
+                            tuffGuys.clear();
+                            tuffGuys.push_back(temp.name);
+                        } else if (temp.age == maxAge) {
+                            tuffGuys.push_back(temp.name);
+                        } if (temp.age < minAge && !firstkill) {
+                            minAge = temp.age;
+                            wimpyGuys.clear();
+                            wimpyGuys.push_back(temp.name);
+                        } else if (temp.age == minAge) {
+                            wimpyGuys.push_back(temp.name);
+                        }
                     }
-                    
                 } if (median) ages.push(temp.age);
             } else {
-                field.push(temp);
+                shooting_range.push(temp);
                 //cout << temp << " survived \n";
             } //cout << field.size() << " zombies remaining \n";
+            field[temp.index] = temp;
         }
 
         //cout << "sim exited\n";
