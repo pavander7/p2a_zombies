@@ -136,22 +136,22 @@ int main (int argc, char* argv[]) {
             cout << "DEFEAT IN ROUND " << round << "! " << killer << " ate your brains!\n";
             if (statistics) {
                 cout << "First zombies killed:\n";
-                for (uint32_t kvnt = 1; kvnt <= N; kvnt++) {
+                for (uint32_t kvnt = 1; kvnt <= min(size_t(N),graveyardF.size()); kvnt++) {
                     cout << graveyardF.front() << " " << kvnt << endl;
                     graveyardF.pop_front();
                 } 
                 cout << "Last zombies killed:\n";
-                for (uint32_t pvssie = 1; pvssie <= N; pvssie++) {
+                for (uint32_t pvssie = 1; pvssie <= min(size_t(N),graveyardL.size()); pvssie++) {
                     cout << graveyardL.front() << " " << pvssie << endl;
                     graveyardL.pop_front();
                 } 
                 cout << "Most active zombies:\n";
-                for (uint32_t kawk = 1; kawk <= N; kawk++) {
+                for (uint32_t kawk = 1; kawk <= min(size_t(N),tuffGuys.size()); kawk++) {
                     cout << tuffGuys.front() << " " << maxAge << endl;
                     tuffGuys.pop_back();
                 }
                 cout << "Least active zombies:\n";
-                for (uint32_t bawls = 1; bawls <= N; bawls++) {
+                for (uint32_t bawls = 1; bawls <= min(size_t(N),wimpyGuys.size()); bawls++) {
                     cout << wimpyGuys.front() << " " << minAge << endl;
                     wimpyGuys.pop_back();
                 }
@@ -256,22 +256,22 @@ int main (int argc, char* argv[]) {
     // stats output
     if (statistics) {
         cout << "First zombies killed:\n";
-        for (uint32_t kvnt = 1; kvnt <= N; kvnt++) {
+        for (uint32_t kvnt = 1; kvnt <= min(size_t(N),graveyardF.size()); kvnt++) {
             cout << graveyardF.front() << " " << kvnt << endl;
             graveyardF.pop_front();
         } 
         cout << "Last zombies killed:\n";
-        for (uint32_t pvssie = 1; pvssie <= N; pvssie++) {
+        for (uint32_t pvssie = 1; pvssie <= min(size_t(N),graveyardL.size()); pvssie++) {
             cout << graveyardL.front() << " " << pvssie << endl;
             graveyardL.pop_front();
         } 
         cout << "Most active zombies:\n";
-        for (uint32_t kawk = 1; kawk <= N; kawk++) {
+        for (uint32_t kawk = 1; kawk <= min(size_t(N),tuffGuys.size()); kawk++) {
             cout << tuffGuys.front() << " " << maxAge << endl;
             tuffGuys.pop_back();
         }
         cout << "Least active zombies:\n";
-        for (uint32_t bawls = 1; bawls <= N; bawls++) {
+        for (uint32_t bawls = 1; bawls <= min(size_t(N),wimpyGuys.size()); bawls++) {
             cout << wimpyGuys.front() << " " << minAge << endl;
             wimpyGuys.pop_back();
         }
