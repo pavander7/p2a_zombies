@@ -134,6 +134,28 @@ int main (int argc, char* argv[]) {
         //cout << "step 4: check death \n";
         if (dead) {
             cout << "DEFEAT IN ROUND " << round << "! " << killer << " ate your brains!\n";
+            if (statistics) {
+                cout << "First zombies killed:\n";
+                for (uint32_t kvnt = 1; kvnt <= N; kvnt++) {
+                    cout << graveyardF.front() << " " << kvnt << endl;
+                    graveyardF.pop_front();
+                } 
+                cout << "Last zombies killed:\n";
+                for (uint32_t pvssie = 1; pvssie <= N; pvssie++) {
+                    cout << graveyardL.front() << " " << pvssie << endl;
+                    graveyardL.pop_front();
+                } 
+                cout << "Most active zombies:\n";
+                for (uint32_t kawk = 1; kawk <= N; kawk++) {
+                    cout << tuffGuys.front() << " " << maxAge << endl;
+                    tuffGuys.pop_back();
+                }
+                cout << "Least active zombies:\n";
+                for (uint32_t bawls = 1; bawls <= N; bawls++) {
+                    cout << wimpyGuys.front() << " " << minAge << endl;
+                    wimpyGuys.pop_back();
+                }
+            }
             return 0;
         }
 
