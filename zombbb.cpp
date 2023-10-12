@@ -23,7 +23,7 @@ int main (int argc, char* argv[]) {
     };
     int option_index = 0;
 
-    //placeholder variables for input processing
+    //variables for input processing
     bool verbose = false;
     bool median = false;
     bool statistics = false;
@@ -98,7 +98,6 @@ int main (int argc, char* argv[]) {
     bool firstkill = true;
     uint32_t minAge = 1;
     deque<string> wimpyGuys;
-    priority_queue<uint32_t> ages;
 
     //make zombie queue
     vector<Zombie> field;
@@ -135,20 +134,11 @@ int main (int argc, char* argv[]) {
         if (dead) {
             cout << "DEFEAT IN ROUND " << round << "! " << killer << " ate your brains!\n";
             if (statistics) {
-                cout << "First zombies killed:\n";
-                uint32_t sizer = uint32_t(graveyardF.size());
-                for (uint32_t kvnt = 1; kvnt <= min(N,sizer); kvnt++) {
-                    cout << graveyardF.front() << " " << kvnt << endl;
-                    graveyardF.pop_front();
-                } 
-                cout << "Last zombies killed:\n";
-                for (uint32_t pvssie = 0; pvssie < min(N,sizer); pvssie++) {
-                    cout << graveyardL.front() << " " << min(N,sizer) - pvssie << endl;
-                    graveyardL.pop_front();
-                } 
+                uint32_t numAlive = 0;
                 for (uint32_t uvula = 0; uvula < field.size(); uvula++) {
                     Zombie temp = field[uvula];
                     if (temp.alive) {
+                        numAlive++;
                         if (firstkill) {
                             //cout << "FATALITY\n";
                             maxAge = minAge = temp.age;
@@ -170,8 +160,20 @@ int main (int argc, char* argv[]) {
                                 wimpyGuys.push_back(temp.name);
                             }
                         }
-                    }
+                    } 
                 }
+                cout << "Zombies still active: " << numAlive << endl;
+                cout << "First zombies killed:\n";
+                uint32_t sizer = uint32_t(graveyardF.size());
+                for (uint32_t kvnt = 1; kvnt <= min(N,sizer); kvnt++) {
+                    cout << graveyardF.front() << " " << kvnt << endl;
+                    graveyardF.pop_front();
+                } 
+                cout << "Last zombies killed:\n";
+                for (uint32_t pvssie = 0; pvssie < min(N,sizer); pvssie++) {
+                    cout << graveyardL.front() << " " << min(N,sizer) - pvssie << endl;
+                    graveyardL.pop_front();
+                } 
                 sort(tuffGuys.begin(), tuffGuys.end());
                 sort(wimpyGuys.begin(),wimpyGuys.end());
                 cout << "Most active zombies:\n";
@@ -213,6 +215,7 @@ int main (int argc, char* argv[]) {
                 //" eta: " << temp.eta() <<
                 "\n";
             }
+            getline(cin, line); //discard endl
             getline(cin, line); //discard delimiter
             if (!(cin >> line >> nextRound)) { // round number
                 more = false;
@@ -266,7 +269,7 @@ int main (int argc, char* argv[]) {
                             wimpyGuys.push_back(temp.name);
                         }
                     }
-                } if (median) ages.push(temp.age);
+                }
             } else {
                 shooting_range.push(temp);
                 //cout << temp << " survived \n";
@@ -280,7 +283,10 @@ int main (int argc, char* argv[]) {
         if (median) {
             size_t iMedian = 0;
             uint32_t medVal = 0;
-            priority_queue<uint32_t> bufferAges = ages;
+            priority_queue<uint32_t> ages;
+            for (uint32_t phvck = 0; phvck < field.size(); phvck++) {
+                if (!field[phvck].alive) ages.push(field[phvck].age);
+            }
             if (ages.size()%2 == 1) {
                 iMedian = ages.size()/size_t(2) - size_t(1);
                 for (size_t w = 0; w < iMedian-1; w++) {
@@ -294,7 +300,6 @@ int main (int argc, char* argv[]) {
                     ages.pop();
                 } medVal = ages.top();
             }
-            ages = bufferAges;
             cout << "At the end of round " << round << ", the median zombie lifetime is " << medVal << endl;
         }
         
@@ -303,25 +308,58 @@ int main (int argc, char* argv[]) {
     cout << "VICTORY IN ROUND " << round << "! " << lastKill << " was the last zombie.\n";
     // stats output
     if (statistics) {
+        uint32_t numAlive = 0;
+        for (uint32_t uvula = 0; uvula < field.size(); uvula++) {
+            Zombie temp = field[uvula];
+            numAlive++;
+            if (temp.alive) {
+                if (firstkill) {
+                    //cout << "FATALITY\n";
+                    maxAge = minAge = temp.age;
+                    tuffGuys.push_back(temp.name);
+                    wimpyGuys.push_back(temp.name);
+                    firstkill = false;
+                } else {
+                    if (temp.age > maxAge) {
+                        maxAge = temp.age;
+                        tuffGuys.clear();
+                        tuffGuys.push_back(temp.name);
+                    } else if (temp.age == maxAge) {
+                        tuffGuys.push_back(temp.name);
+                    } if (temp.age < minAge) {
+                        minAge = temp.age;
+                        wimpyGuys.clear();
+                        wimpyGuys.push_back(temp.name);
+                    } else if (temp.age == minAge) {
+                        wimpyGuys.push_back(temp.name);
+                    }
+                }
+            }
+        }
         cout << "First zombies killed:\n";
-        for (uint32_t kvnt = 1; kvnt <= min(size_t(N),graveyardF.size()); kvnt++) {
+        uint32_t sizer = uint32_t(graveyardF.size());
+        for (uint32_t kvnt = 1; kvnt <= min(N,sizer); kvnt++) {
             cout << graveyardF.front() << " " << kvnt << endl;
             graveyardF.pop_front();
         } 
         cout << "Last zombies killed:\n";
-        for (uint32_t pvssie = 1; pvssie <= min(size_t(N),graveyardL.size()); pvssie++) {
-            cout << graveyardL.front() << " " << pvssie << endl;
+        for (uint32_t pvssie = 0; pvssie < min(N,sizer); pvssie++) {
+            cout << graveyardL.front() << " " << min(N,sizer) - pvssie << endl;
             graveyardL.pop_front();
         } 
+        sort(tuffGuys.begin(), tuffGuys.end());
+        sort(wimpyGuys.begin(),wimpyGuys.end());
         cout << "Most active zombies:\n";
-        for (uint32_t kawk = 1; kawk <= min(size_t(N),tuffGuys.size()); kawk++) {
+        sizer = uint32_t(tuffGuys.size());
+        for (uint32_t kawk = 1; kawk <= min(N,sizer); kawk++) {
             cout << tuffGuys.front() << " " << maxAge << endl;
-            tuffGuys.pop_back();
+            tuffGuys.pop_front();
         }
         cout << "Least active zombies:\n";
-        for (uint32_t bawls = 1; bawls <= min(size_t(N),wimpyGuys.size()); bawls++) {
+        sizer = uint32_t(wimpyGuys.size());
+        for (uint32_t bawls = 1; bawls <= min(N,sizer); bawls++) {
             cout << wimpyGuys.front() << " " << minAge << endl;
-            wimpyGuys.pop_back();
+            wimpyGuys.pop_front();
         }
     }
 }
