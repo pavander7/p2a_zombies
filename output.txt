@@ -43793,93 +43793,410 @@ Destroyed: darden2395 (distance: 273, speed: 1, health: 0)
 Destroyed: fee3606 (distance: 274, speed: 1, health: 0)
 Destroyed: darden2035 (distance: 275, speed: 1, health: 0)
 Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
-Destroyed: will3821 (distance: 276, speed: 1, health: 0)
+At the end of round 31, the median zombie lifetime is 7
+VICTORY IN ROUND 31! will3821 was the last zombie.
+Zombies still active: 0
+First zombies killed:
+noah88 1
+potatobot377 2
+cris291 3
+noah124 4
+noah385 5
+bing22 6
+fee222 7
+will275 8
+noah205 9
+bing310 10
+cris129 11
+darden109 12
+fee150 13
+will221 14
+darden199 15
+noah151 16
+paoletti342 17
+will77 18
+darden307 19
+fee51 20
+will131 21
+darden73 22
+noah331 23
+cris318 24
+fee78 25
+bing121 26
+paoletti72 27
+darden262 28
+darden154 29
+cris237 30
+potatobot233 31
+will311 32
+garcia74 33
+paoletti45 34
+noah16 35
+paoletti189 36
+paoletti234 37
+potatobot242 38
+cris390 39
+noah133 40
+paoletti144 41
+cris219 42
+noah313 43
+cris147 44
+noah160 45
+potatobot35 46
+cris183 47
+garcia236 48
+potatobot386 49
+paoletti171 50
+potatobot98 51
+cris39 52
+garcia281 53
+paoletti387 54
+paoletti396 55
+will5 56
+fee375 57
+fee105 58
+will293 59
+fee231 60
+darden397 61
+noah115 62
+noah376 63
+paoletti162 64
+paoletti369 65
+cris228 66
+garcia353 67
+will239 68
+bing139 69
+garcia110 70
+potatobot143 71
+fee321 72
+darden181 73
+will32 74
+fee384 75
+will248 76
+paoletti297 77
+bing238 78
+darden1 79
+garcia200 80
+garcia398 81
+potatobot134 82
+bing391 83
+bing85 84
+cris93 85
+noah349 86
+paoletti261 87
+potatobot269 88
+noah394 89
+darden226 90
+bing202 91
+cris138 92
+garcia317 93
+potatobot323 94
+cris111 95
+noah268 96
+potatobot395 97
+garcia101 98
+garcia92 99
+darden343 100
+Last zombies killed:
+will3821 100
+darden2035 99
+fee3606 98
+darden2395 97
+noah1771 96
+bing2731 95
+fee3858 94
+potatobot791 93
+garcia2234 92
+cris2190 91
+noah2428 90
+darden145 89
+paoletti738 88
+darden2503 87
+noah2302 86
+will3992 85
+potatobot845 84
+cris300 83
+will2903 82
+bing3334 81
+cris1812 80
+potatobot3725 79
+potatobot2123 78
+cris3846 77
+paoletti1098 76
+cris1452 75
+bing1318 74
+darden3133 73
+garcia911 72
+will2597 71
+will2030 70
+darden1090 69
+cris1587 68
+cris2649 67
+fee3201 66
+paoletti81 65
+darden2359 64
+bing3901 63
+will3632 62
+will842 61
+cris120 60
+cris1038 59
+bing1669 58
+will1022 57
+garcia1001 56
+noah2716 55
+garcia2891 54
+potatobot197 53
+will2840 52
+garcia2819 51
+garcia3719 50
+bing2335 49
+garcia812 48
+darden3340 47
+garcia2999 46
+cris1605 45
+garcia893 44
+garcia659 43
+bing1939 42
+will3533 41
+darden2287 40
+will1310 39
+bing3595 38
+potatobot1745 37
+fee3237 36
+potatobot3581 35
+fee2625 34
+garcia3458 33
+fee762 32
+paoletti1377 31
+cris2235 30
+bing2938 29
+paoletti2709 28
+noah3796 27
+noah2239 26
+paoletti2295 25
+garcia821 24
+garcia362 23
+garcia551 22
+potatobot3626 21
+fee1302 20
+noah2275 19
+garcia2603 18
+noah1339 17
+will185 16
+will2480 15
+will329 14
+cris1344 13
+paoletti684 12
+fee816 11
+bing814 10
+bing3496 9
+fee1437 8
+darden1279 7
+cris2154 6
+potatobot1727 5
+noah1645 4
+potatobot2528 3
+paoletti3366 2
+bing3037 1
+Most active zombies:
+cris300 31
+darden145 31
+bing382 30
+cris120 30
+fee114 30
+garcia362 30
+paoletti315 30
+paoletti738 30
+paoletti81 30
+potatobot197 30
+potatobot224 30
+potatobot791 30
+will185 30
+will329 30
+bing337 29
+bing94 29
+cris156 29
+cris426 29
+cris570 29
+darden190 29
+darden271 29
+darden532 29
+fee141 29
+fee276 29
+fee519 29
+fee627 29
+fee762 29
+garcia416 29
+garcia551 29
+garcia587 29
+garcia659 29
+noah520 29
+noah7 29
+paoletti1098 29
+paoletti324 29
+paoletti513 29
+paoletti684 29
+potatobot251 29
+potatobot512 29
+potatobot845 29
+bing130 28
+bing166 28
+bing256 28
+bing814 28
+bing895 28
+cris1038 28
+cris282 28
+cris462 28
+cris696 28
+darden1090 28
+darden595 28
+darden622 28
+fee1149 28
+fee636 28
+fee663 28
+fee816 28
+garcia1001 28
+garcia812 28
+garcia821 28
+garcia893 28
+garcia911 28
+noah700 28
+paoletti54 28
+paoletti585 28
+paoletti765 28
+potatobot1124 28
+potatobot341 28
+potatobot71 28
+will1022 28
+will1031 28
+will1103 28
+will14 28
+will383 28
+will473 28
+will842 28
+bing1192 27
+bing1318 27
+bing1480 27
+bing175 27
+bing463 27
+bing58 27
+cris1119 27
+cris1344 27
+cris1452 27
+cris1578 27
+cris1587 27
+cris165 27
+cris309 27
+cris615 27
+cris993 27
+darden1108 27
+darden1279 27
+darden424 27
+darden973 27
+fee1302 27
+fee1437 27
+fee429 27
+fee492 27
+fee87 27
+fee996 27
+Least active zombies:
+bing1003 1
+bing1012 1
+bing1084 1
+bing1129 1
+bing1138 1
+bing1201 1
+bing121 1
+bing1210 1
+bing1219 1
+bing1228 1
+bing1246 1
+bing1300 1
+bing1336 1
+bing1363 1
+bing1372 1
+bing1381 1
+bing139 1
+bing1444 1
+bing1462 1
+bing1471 1
+bing1489 1
+bing1651 1
+bing1687 1
+bing1696 1
+bing1705 1
+bing1840 1
+bing1867 1
+bing1921 1
+bing193 1
+bing1930 1
+bing1948 1
+bing1975 1
+bing1984 1
+bing202 1
+bing2038 1
+bing2092 1
+bing22 1
+bing220 1
+bing2227 1
+bing2263 1
+bing2272 1
+bing2317 1
+bing238 1
+bing2470 1
+bing2533 1
+bing2785 1
+bing2848 1
+bing292 1
+bing2920 1
+bing2956 1
+bing3001 1
+bing310 1
+bing3226 1
+bing3883 1
+bing3892 1
+bing391 1
+bing445 1
+bing454 1
+bing481 1
+bing499 1
+bing589 1
+bing598 1
+bing634 1
+bing652 1
+bing670 1
+bing697 1
+bing706 1
+bing715 1
+bing724 1
+bing733 1
+bing778 1
+bing787 1
+bing823 1
+bing841 1
+bing85 1
+bing859 1
+bing904 1
+bing913 1
+bing958 1
+cris1002 1
+cris1011 1
+cris1020 1
+cris1047 1
+cris1092 1
+cris1101 1
+cris111 1
+cris1110 1
+cris1164 1
+cris1182 1
+cris1254 1
+cris1263 1
+cris129 1
+cris1299 1
+cris1308 1
+cris1335 1
+cris138 1
+cris1434 1
+cris147 1
+cris1470 1
+cris1506 1

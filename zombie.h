@@ -8,7 +8,7 @@ using namespace std;
 
 class Zombie {
 public:
-    Zombie(bool named, uint32_t indexIn);
+    Zombie(bool named);
     
     void damage();
     bool move();
@@ -22,7 +22,6 @@ public:
 
     string name;
     uint32_t age;
-    uint32_t index;
     bool alive;
 
 private:
@@ -33,5 +32,15 @@ private:
 
 class ZombieCompare {
 public:
-    bool operator() (const Zombie &a, const Zombie &b) const;
+    bool operator() (const Zombie* a, const Zombie* b) const;
+};
+
+class ZombLifeMost {
+public:
+    bool operator() (const Zombie* a, const Zombie* b) const;
+};
+
+class ZombLifeLeast {
+public:
+    bool operator() (const Zombie* a, const Zombie* b) const;
 };

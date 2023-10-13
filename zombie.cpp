@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Zombie::Zombie(bool named, uint32_t indexIn) {
+Zombie::Zombie(bool named) {
     string junk;
     if (named) {
         cin >> name >> junk >> distance >> junk >> speed >> junk >> health;
@@ -20,7 +20,6 @@ Zombie::Zombie(bool named, uint32_t indexIn) {
     }
     age   = 1;
     alive = true;
-    index = indexIn;
 }
 
 bool Zombie::move() {
@@ -43,16 +42,28 @@ bool Zombie::die() {
     } return !alive;
 }
 
-bool ZombieCompare::operator() (const Zombie &a, const Zombie &b) const {
-    if (a.eta() < b.eta()) {
+bool ZombieCompare::operator() (const Zombie* a, const Zombie* b) const {
+    if (a->eta() < b->eta()) {
         return false;
-    } else if (a.eta() == b.eta()) {
-        if (a.health < b.health) {
+    } else if (a->eta() == b->eta()) {
+        if (a->health < b->health) {
             return false;
-        } else if (a.health == b.health) {
-            return (a.name > b.name);
+        } else if (a->health == b->health) {
+            return (a->name > b->name);
         } else return true;
     } else return true;
+}
+
+bool ZombLifeLeast::operator() (const Zombie* a, const Zombie* b) const {
+    if (a->age == b->age) {
+        return (a->name > b->name);
+    } else return (a->age > b->age);
+}
+
+bool ZombLifeMost::operator() (const Zombie* a, const Zombie* b) const {
+    if (a->age == b->age) {
+        return (a->name > b->name);
+    } else return (a->age < b->age);
 }
 
 ostream & operator << (ostream &out, const Zombie &z) {

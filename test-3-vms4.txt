@@ -1,0 +1,14 @@
+#test 4
+quiver-capacity: 10
+random-seed: 2049231
+max-rand-distance: 60
+max-rand-speed: 50
+max-rand-health: 5
+---
+round: 1
+random-zombies: 25
+named-zombies: 4
+CatherineAnn distance: 5 speed: 1 health: 5
+ThomasPaul distance: 5 speed: 1 health: 6
+TimothyDouglas distance: 5 speed: 2 health: 5
+MargaretElizabeth distance: 6 speed: 1 health: 5
