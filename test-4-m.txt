@@ -1,0 +1,16 @@
+#test 4
+quiver-capacity: 10
+random-seed: 2049231
+max-rand-distance: 10
+max-rand-speed: 10
+max-rand-health: 5
+---
+round: 1
+random-zombies: 1
+named-zombies: 1
+Bob distance: 7 speed: 1 health: 3
+---
+round: 3
+random-zombies: 1
+named-zombies: 1
+Rob distance: 7 speed: 1 health: 3

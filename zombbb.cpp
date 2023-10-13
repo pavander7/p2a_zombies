@@ -78,10 +78,7 @@ int main (int argc, char* argv[]) {
     P2random::initialize(seed, maxDist, maxSpeed, maxHealth);
 
     //make player
-    uint32_t quiver = 0;
     uint32_t round = 0;
-    uint32_t numRandos = 0;
-    uint32_t numOCs = 0;
 
     //for death tracking
     string killer; 
@@ -89,12 +86,9 @@ int main (int argc, char* argv[]) {
     bool dead = false;
     bool more = true;
     bool win = false;
-    uint32_t NUM_ZOMBIES = 0;
-    deque<string> graveyardF;
+    vector<Zombie*> graveyardF;
     deque<string> graveyardL;
-    uint32_t maxAge = 1;
-    bool firstkill = true;
-    uint32_t minAge = 1;
+    uint32_t numAlive = 0;
 
     //make zombie queue
     vector<Zombie> field;
@@ -106,7 +100,9 @@ int main (int argc, char* argv[]) {
     uint32_t nextRound = 0;
     cin >> line >> nextRound; // round number
     while (!win || more) { 
+        uint32_t quiver = 0;
         //cout << "step 1: start round \n";
+        win = false;
         round++;
         if (verbose) cout << "Round: " << round << endl;
         
@@ -114,14 +110,14 @@ int main (int argc, char* argv[]) {
         quiver = QC;
 
         //cout << "step 3: existing zombies move & attack \n";
-        for (uint32_t urethra = 0; urethra < field.size(); urethra++) {
-            if (field[urethra].alive) {
-                bool reach = field[urethra].move();
+        for (uint32_t r = 0; r < field.size(); r++) {
+            if (field[r].alive) {
+                bool reach = field[r].move();
                 if (verbose) {
-                    cout << "Moved: " << field[urethra] << "\n";
+                    cout << "Moved: " << field[r] << "\n";
                 }
                 if (reach && !dead) {
-                    killer = field[urethra].name;
+                    killer = field[r].name;
                     dead = true;
                 }
             }
@@ -131,34 +127,15 @@ int main (int argc, char* argv[]) {
         if (dead) {
             cout << "DEFEAT IN ROUND " << round << "! " << killer << " ate your brains!\n";
             if (statistics) {
-                uint32_t numAlive = 0;
-                for (uint32_t uvula = 0; uvula < field.size(); uvula++) {
-                    Zombie temp = field[uvula];
-                    if (temp.alive) {
-                        numAlive++;
-                        if (firstkill) {
-                            //cout << "FATALITY\n";
-                            maxAge = minAge = temp.age;
-                            firstkill = false;
-                        } else {
-                            if (temp.age > maxAge) {
-                                maxAge = temp.age;
-                            } if (temp.age < minAge) {
-                                minAge = temp.age;
-                            }
-                        }
-                    } 
-                }
                 cout << "Zombies still active: " << numAlive << endl;
-                cout << "First zombies killed:\n";
                 uint32_t sizer = uint32_t(graveyardF.size());
-                for (uint32_t k = 1; k <= min(N,sizer); k++) {
-                    cout << graveyardF.front() << " " << k << endl;
-                    graveyardF.pop_front();
+                cout << "First zombies killed:\n";
+                for (uint32_t k = 0; k < min(N,sizer); k++) {
+                    cout << graveyardF[k]->name << " " << k + 1 << endl;
                 } 
                 cout << "Last zombies killed:\n";
-                for (uint32_t p = 0; p < min(N,sizer); p++) {
-                    cout << graveyardL.front() << " " << min(N,sizer) - p << endl;
+                for (uint32_t p = min(N,sizer); p > 0; p--) {
+                    cout << graveyardL.front() << " " << p << endl;
                     graveyardL.pop_front();
                 } 
                 priority_queue<Zombie*, vector<Zombie*>, ZombLifeMost> most;
@@ -166,7 +143,7 @@ int main (int argc, char* argv[]) {
                     most.push(&field[f]);
                 }
                 cout << "Most active zombies:\n";
-                for (uint32_t g = 1; g <= N; g++) {
+                for (uint32_t g = 1; (g <= N && !most.empty()); g++) {
                     cout << most.top()->name << " " << most.top()->age << endl;
                     most.pop();
                 }
@@ -175,7 +152,7 @@ int main (int argc, char* argv[]) {
                     least.push(&field[f]);
                 }
                 cout << "Least active zombies:\n";
-                for (uint32_t g = N; g >= 1; g--) {
+                for (uint32_t g = min(N,uint32_t(least.size())); g >= 1; g--) {
                     cout << least.top()->name << " " << least.top()->age << endl;
                     least.pop();
                 }
@@ -187,19 +164,20 @@ int main (int argc, char* argv[]) {
         //cout << nextRound << " is the next wave\n";
         if (round == nextRound) {
             //cout << "hello\n";
+            uint32_t numRandos = 0;
+            uint32_t numOCs = 0;
             cin >> line >> numRandos; // random zombie pop
             cin >> line >> numOCs; // named zombie pop
+            numAlive = numAlive + numRandos + numOCs;
             for (uint32_t q = 0; q < numRandos; q++) {
                 Zombie temp = Zombie(false);
                 field.push_back(temp);
-                NUM_ZOMBIES++;
                 if (verbose) cout << "Created: " << temp << 
                 //" eta: " << temp.eta() <<
                 "\n";
             } for (uint32_t s = 0; s < numOCs; s++) {
                 Zombie temp = Zombie(true);
                 field.push_back(temp);
-                NUM_ZOMBIES++;
                 if (verbose) cout << "Created: " << temp <<
                 //" eta: " << temp.eta() <<
                 "\n";
@@ -218,69 +196,69 @@ int main (int argc, char* argv[]) {
             if (field[k].alive) shooting_range.push(&field[k]);
         }
         while (quiver != 0 && !shooting_range.empty()) {
+            //cout << "quiver: " << quiver << endl;
             Zombie* temp = shooting_range.top();
             shooting_range.pop();
             temp->damage();
             quiver--;
-            //cout << "shooting: " << temp << endl;
+            //cout << "shooting: " << *temp << endl;
             if (temp->die()) {
                 if (shooting_range.empty()) win = true;
+                numAlive--;
                 if (verbose) {
                     cout << "Destroyed: " << *temp << endl;
                 }
                 lastKill = temp->name;
                 if (statistics) {
-                    if (graveyardF.size() < N) {
-                        graveyardF.push_back(temp->name);
-                        graveyardL.push_front(temp->name);
-                    } else if (graveyardL.size() == N) {
-                        //cout << "graveyard full\n";
+                    if (graveyardL.size() >= N) {
                         graveyardL.pop_back();
                         graveyardL.push_front(temp->name);
-                    }
-                    if (firstkill) {
-                        //cout << "FATALITY\n";
-                        maxAge = minAge = temp->age;
-                        firstkill = false;
                     } else {
-                        if (temp->age > maxAge) {
-                            maxAge = temp->age;
-                        } if (temp->age < minAge) {
-                            minAge = temp->age;
-                        } 
+                        graveyardF.push_back(temp);
+                        graveyardL.push_front(temp->name);
                     }
                 }
             } else {
                 shooting_range.push(temp);
-                //cout << temp << " survived \n";
-            } //cout << field.size() << " zombies remaining \n";
+                //cout << *temp << " survived \n";
+            } //cout << shooting_range.size() << " zombies remaining \n";
+            //cout << "condition is " << (quiver != 0 && !shooting_range.empty()) << endl;
         } 
 
         //cout << "sim exited\n";
 
         //cout << "step 7: median\n";
+        
         if (median) {
+            //cout << "hi from median\n";
             size_t iMedian = 0;
             uint32_t medVal = 0;
-            priority_queue<uint32_t> ages;
+            priority_queue<Zombie*, vector<Zombie*>, ZombLifeLeast> ages;
             for (uint32_t p = 0; p < field.size(); p++) {
-                if (!field[p].alive) ages.push(field[p].age);
-            }
-            if (ages.size()%2 == 1) {
+                if (!field[p].alive) {
+                    ages.push(&field[p]);
+                    //cout << "Median: " << field[p] << endl;
+                }
+            }  //cout << field.size() << endl;
+            if (ages.size()%2 == 0) {
                 iMedian = ages.size()/size_t(2) - size_t(1);
-                for (size_t w = 0; w < iMedian-1; w++) {
-                    ages.pop();
-                } uint32_t temp = ages.top();
+                //cout << iMedian << endl;
+                if (iMedian != 0) {
+                    for (size_t w = 0; w < iMedian-1; w++) {
+                        ages.pop();
+                    } 
+                } Zombie* temp = ages.top();
                 ages.pop();
-                medVal = (ages.top() + temp)/uint32_t(2);
+                medVal = (ages.top()->age + temp->age)/uint32_t(2);
             } else {
                 iMedian = (ages.size() - size_t(1))/size_t(2);
+                //cout << iMedian << endl;
                 for (size_t w = 0; w < iMedian-1; w++) {
                     ages.pop();
-                } medVal = ages.top();
+                } medVal = ages.top()->age;
             }
             cout << "At the end of round " << round << ", the median zombie lifetime is " << medVal << endl;
-        }
+        } 
         
         // step 8: check win (while loop condition)
     }
@@ -288,15 +266,14 @@ int main (int argc, char* argv[]) {
     // stats output
     if (statistics) {
         cout << "Zombies still active: 0\n";
-        cout << "First zombies killed:\n";
         uint32_t sizer = uint32_t(graveyardF.size());
-        for (uint32_t k = 1; k <= min(N,sizer); k++) {
-            cout << graveyardF.front() << " " << k << endl;
-            graveyardF.pop_front();
+        cout << "First zombies killed:\n";
+        for (uint32_t k = 0; k < min(N,sizer); k++) {
+            cout << graveyardF[k]->name << " " << k + 1 << endl;
         } 
         cout << "Last zombies killed:\n";
-        for (uint32_t p = 0; p < min(N,sizer); p++) {
-            cout << graveyardL.front() << " " << min(N,sizer) - p << endl;
+        for (uint32_t p = min(N,sizer); p > 0; p--) {
+            cout << graveyardL.front() << " " << p << endl;
             graveyardL.pop_front();
         } 
         priority_queue<Zombie*, vector<Zombie*>, ZombLifeMost> most;
@@ -304,7 +281,7 @@ int main (int argc, char* argv[]) {
             most.push(&field[f]);
         }
         cout << "Most active zombies:\n";
-        for (uint32_t g = 1; g <= N; g++) {
+        for (uint32_t g = 1; (g <= N && !most.empty()); g++) {
             cout << most.top()->name << " " << most.top()->age << endl;
             most.pop();
         }
@@ -313,9 +290,10 @@ int main (int argc, char* argv[]) {
             least.push(&field[f]);
         }
         cout << "Least active zombies:\n";
-        for (uint32_t g = N; g >= 1; g--) {
+        for (uint32_t g = min(N,uint32_t(least.size())); g >= 1; g--) {
             cout << least.top()->name << " " << least.top()->age << endl;
             least.pop();
         }
     }
+    return 0;
 }

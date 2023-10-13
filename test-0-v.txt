@@ -1,5 +1,4 @@
 #test 0
-# sample.txt
 quiver-capacity: 10
 random-seed: 2049231
 max-rand-distance: 60
